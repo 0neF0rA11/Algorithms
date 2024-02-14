@@ -3,15 +3,19 @@
 # посчитать в скольких отрезках содержится число x. 
 
 n = int(input())
-
-count_dict = {}
+count_list = [0]*int(1e5)
 
 for i in range(n):
     l, r = input().split()
-    for number in range(int(l), int(r)+1):
-        count_dict[number] = count_dict.get(number, 0) + 1
-print()
+    count_list[int(l)] += 1
+    count_list[int(r)+1] -= 1
 
-for key, value in count_dict.items():
-    print(key, value)
-    
+for i in range(len(count_list)):
+    count_list[i] += count_list[i-1]
+
+print()
+for i in range(len(count_list)):
+    if count_list[i] > 0:
+        print(i, count_list[i])
+
+# Изначальная сложность была O(n*n), нынешняя O(n+m)
